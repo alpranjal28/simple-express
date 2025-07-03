@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres
+    container_name: dbase
+    restart: always
+    environment:
+      - POSTGRES_USER=post
+      - POSTGRES_PASSWORD=gres
+    ports:
+      - "5432:5432"
+  express-postgres:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL_POSTGRES=postgresql://post:gres@dbase:5432/mydb
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+
